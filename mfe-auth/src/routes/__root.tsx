@@ -1,23 +1,38 @@
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import { useEffect, useState } from "react";
+import LogoutButton from "../components/auth/LogoutButton/LogoutButton";
+import { Session } from "@supabase/supabase-js";
+import "../page-styles/root.css";
+import getUserSession from "../services/session";
 
 export const Route = createRootRoute({
-  component: () => (
-    <>
-      <div className="p-2 flex gap-2">
-        <Link to="/" className="[&.active]:font-bold">
-          Home
-        </Link>{" "}
-        <Link to="/login" className="[&.active]:font-bold">
-          login
-        </Link>
-        <Link to="/signup" className="[&.active]:font-bold">
-          signup
-        </Link>
-      </div>
-      <hr />
-      <Outlet />
-      <TanStackRouterDevtools />
-    </>
-  ),
+  component: RootComponent,
 });
+
+function RootComponent() {
+  const [session, setSession] = useState<Session | null>(null);
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      const userSession = await getUserSession();
+      setSession(userSession);
+    };
+
+    fetchSession();
+  }, []);
+
+  return (
+    <>
+      <nav className="navbar">
+        {session ? (
+          <LogoutButton />
+        ) : (
+          <Link to={"/login"} className="btn">
+            Login
+          </Link>
+        )}
+      </nav>
+      <Outlet />
+    </>
+  );
+}
