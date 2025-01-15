@@ -28,7 +28,7 @@ export default defineConfig({
     minify: false,
     cssCodeSplit: false,
     rollupOptions: {
-      external: ["angularApp/Tasklist"],
+      external: ["angularApp/AngularTaskApp"],
     },
   },
 });
