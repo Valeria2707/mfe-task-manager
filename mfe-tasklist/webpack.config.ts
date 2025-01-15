@@ -38,7 +38,7 @@ module.exports = {
       name: 'angularApp',
       filename: 'remoteEntry.js',
       exposes: {
-        './AppComponent': './src/app/app.component.web.ts',
+        './AngularTaskApp': './src/app/app.component.web.ts',
       },
       shared: {
         react: {

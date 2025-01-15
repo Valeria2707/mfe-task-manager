@@ -4,15 +4,14 @@ import { Task } from "../../types/Task";
 import { PRIORITY } from "../../constants/Task";
 import { updateTask } from "../../services/update";
 import { addTask } from "../../services/add";
-import { useNavigate } from "react-router-dom";
 
 type Props = {
   editMode?: boolean;
   task?: Task;
+  onNavigate: (path: string) => void;
 };
 
-export default function TaskForm({ task, editMode }: Props) {
-  const navigate = useNavigate();
+export default function TaskForm({ task, editMode, onNavigate }: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -26,10 +25,10 @@ export default function TaskForm({ task, editMode }: Props) {
 
       if (editMode) {
         await updateTask(formData);
-        navigate("/tasks");
+        onNavigate("/task-page");
       } else {
         await addTask(formData);
-        navigate("/tasks");
+        onNavigate("/task-page");
       }
     } catch (err) {
       setError((err as string) || "An error occurred");

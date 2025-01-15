@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./AuthForm.css";
 import { login } from "../../../services/login";
 import { signUp } from "../../../services/signup";
-import { router } from "../../../router";
 
 type AuthFormProps = {
   mode: "login" | "signup";
@@ -28,7 +27,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
           result.error || "Something went wrong. Please try again."
         );
       } else {
-        router.navigate({ to: "/" });
+        window.location.href = "/task-page";
       }
     } catch (error) {
       setErrorMessage(

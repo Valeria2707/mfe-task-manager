@@ -14,7 +14,7 @@ function Index() {
         productivity.
       </p>
       <div className="home-link-container">
-        <a href="/tasks" className="home-link">
+        <a href="/task-page" className="home-link">
           Go to Tasks
         </a>
       </div>

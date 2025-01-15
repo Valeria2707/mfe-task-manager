@@ -9,4 +9,11 @@ import { TaskListComponent } from '../../components/task-list/task-list.componen
   templateUrl: './task-page.component.html',
   styleUrls: ['./task-page.component.scss'],
 })
-export class TaskPageComponent {}
+export class TaskPageComponent {
+  navigateToCreateTask(): void {
+    const event = new CustomEvent('angularNavigate', {
+      detail: '/create',
+    });
+    window.dispatchEvent(event);
+  }
+}

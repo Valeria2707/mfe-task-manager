@@ -4,5 +4,7 @@
     <app-task-filter></app-task-filter>
     <app-task-list></app-task-list>
   </div>
-  <a routerLink="/create-task" class="create-button">Create a New Todo</a>
+  <a (click)="navigateToCreateTask()" class="create-button"
+    >Create a New Todo</a
+  >
 </div>

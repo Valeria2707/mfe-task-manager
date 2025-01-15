@@ -31,6 +31,11 @@ export class TaskListComponent implements OnInit {
       this.searchParams = params as SearchParams;
       this.fetchTasks();
     });
+
+    window.addEventListener('taskDeleted', ((event: Event) => {
+      const customEvent = event as CustomEvent;
+      this.tasks = this.tasks.filter((task) => task.id !== customEvent.detail);
+    }) as EventListener);
   }
 
   toggleDetails(task: Task): void {

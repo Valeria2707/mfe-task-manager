@@ -4,6 +4,10 @@ import App from "./App.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
+    <App
+      onNavigate={(path: string) => {
+        console.log("Navigate to ", path);
+      }}
+    />
   </StrictMode>
 );

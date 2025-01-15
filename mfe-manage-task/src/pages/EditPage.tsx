@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "../styles/page.css";
 import TaskForm from "../components/TaskForm/TaskForm";
 import { Task } from "../types/Task";
 import { getTaskById } from "../services/getById";
 
-export default function EditPage() {
+interface Props {
+  onNavigate: (path: string) => void;
+}
+
+export default function EditPage({ onNavigate }: Props) {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [task, setTask] = useState<Task | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -30,7 +33,7 @@ export default function EditPage() {
     };
 
     fetchTask();
-  }, [id, navigate]);
+  }, [id, onNavigate]);
 
   if (loading) {
     return <div className="loading-message">Loading task data...</div>;
@@ -42,12 +45,12 @@ export default function EditPage() {
 
   return (
     <div>
-      <button onClick={() => navigate("/")} className="back-button">
+      <button onClick={() => onNavigate("/task-page")} className="back-button">
         ←
       </button>
       <div className="task-form-container">
         <h2 className="task-form-title">Edit Task</h2>
-        <TaskForm editMode task={task} />
+        <TaskForm editMode task={task} onNavigate={onNavigate} />
       </div>
     </div>
   );
