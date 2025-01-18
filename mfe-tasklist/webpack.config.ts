@@ -11,7 +11,7 @@ sharedMappings.register(path.join(__dirname, 'tsconfig.json'), [
 ]);
 module.exports = {
   output: {
-    publicPath: 'http://localhost:4201/',
+    publicPath: 'https://d36258l4iadhdx.cloudfront.net',
     uniqueName: 'angularApp',
     scriptType: 'text/javascript',
   },
