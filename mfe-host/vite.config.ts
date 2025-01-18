@@ -10,11 +10,12 @@ export default defineConfig({
     federation({
       name: "wrapper-app",
       remotes: {
-        remoteAuthApp: "http://localhost:5001/assets/authRemoteEntry.js",
+        remoteAuthApp:
+          "https://d2s8ziqnavmq8u.cloudfront.net/assets/authRemoteEntry.js",
         remoteTaskManagerApp:
-          "http://localhost:5002/assets/manageTaskRemoteEntry.js",
+          "https://d3p735ri8iwner.cloudfront.net/assets/manageTaskRemoteEntry.js",
         angularApp: {
-          external: "http://localhost:4201/remoteEntry.js",
+          external: "https://d36258l4iadhdx.cloudfront.net/remoteEntry.js",
           externalType: "url",
           format: "var",
         },
