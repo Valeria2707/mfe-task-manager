@@ -4,6 +4,7 @@ import "../styles/page.css";
 import TaskForm from "../components/TaskForm/TaskForm";
 import { Task } from "../types/Task";
 import { getTaskById } from "../services/getById";
+import { useAction } from "../hooks/useAction";
 
 interface Props {
   onNavigate: (path: string) => void;
@@ -11,29 +12,24 @@ interface Props {
 
 export default function EditPage({ onNavigate }: Props) {
   const { id } = useParams();
+  const { executeAction, loading, error } = useAction<Task, string>();
   const [task, setTask] = useState<Task | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchTask = async () => {
+      if (!id) {
+        console.error("Task ID is missing.");
+        return;
+      }
       try {
-        if (!id) {
-          setError("Task ID is missing.");
-          setLoading(false);
-          return;
-        }
-        const fetchedTask = await getTaskById(id);
-        setTask(fetchedTask);
+        const fetchedTask = await executeAction(getTaskById, id);
+        setTask(fetchedTask || null);
       } catch (err) {
-        setError((err as string) || "Failed to fetch task data.");
-      } finally {
-        setLoading(false);
+        console.error("Failed to fetch task:", err);
       }
     };
-
     fetchTask();
-  }, [id, onNavigate]);
+  }, [id, executeAction]);
 
   if (loading) {
     return <div className="loading-message">Loading task data...</div>;

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useMemo } from "react";
 import "./TaskForm.css";
 import { Task } from "../../types/Task";
 import { PRIORITY } from "../../constants/Task";
 import { updateTask } from "../../services/update";
 import { addTask } from "../../services/add";
+import { useAction } from "../../hooks/useAction";
 
 type Props = {
   editMode?: boolean;
@@ -12,33 +13,27 @@ type Props = {
 };
 
 export default function TaskForm({ task, editMode, onNavigate }: Props) {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { executeAction, loading, error } = useAction<
+    void | Omit<Task, "id" | "due_date">,
+    FormData
+  >();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
+    const formData = new FormData(e.currentTarget);
 
     try {
-      const formData = new FormData(e.currentTarget);
-
-      if (editMode) {
-        await updateTask(formData);
-        onNavigate("/task-page");
-      } else {
-        await addTask(formData);
-        onNavigate("/task-page");
-      }
+      const action = editMode ? updateTask : addTask;
+      await executeAction(action, formData);
+      onNavigate("/task-page");
     } catch (err) {
-      setError((err as string) || "An error occurred");
-    } finally {
-      setLoading(false);
+      console.error("Failed to submit task:", err);
     }
   };
 
-  const filteredPriorities = Object.values(PRIORITY).filter(
-    (p) => p !== PRIORITY.ANY
+  const filteredPriorities = useMemo(
+    () => Object.values(PRIORITY).filter((p) => p !== PRIORITY.ANY),
+    []
   );
 
   return (
@@ -100,9 +95,11 @@ export default function TaskForm({ task, editMode, onNavigate }: Props) {
             type="checkbox"
             name="completed"
             defaultChecked={task?.completed || false}
+            value="1"
           />
           Completed
         </label>
+        <input type="hidden" name="completed" value="0" />
       </div>
 
       {error && <div className="error-message">{error}</div>}

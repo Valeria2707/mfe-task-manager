@@ -1,5 +1,4 @@
 import { Task } from "../types/Task";
-import { parseValueToBoolean } from "../utils/parser";
 import { supabase } from "../utils/supabase";
 
 export async function updateTask(formData: FormData) {
@@ -14,7 +13,7 @@ export async function updateTask(formData: FormData) {
 
   for (const [key, value] of formData.entries()) {
     if (key === "completed") {
-      fieldsToUpdate.completed = parseValueToBoolean(String(value)) as boolean;
+      fieldsToUpdate.completed = String(value) === "1";
     } else if (key === "due_date") {
       fieldsToUpdate.due_date = new Date(String(value)).toISOString();
     } else if (key !== "id") {

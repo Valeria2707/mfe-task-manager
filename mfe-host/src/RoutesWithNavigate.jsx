@@ -1,21 +1,13 @@
 import TaskList from "./TaskList";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense } from "react";
 import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
-import getUserSession from "./services/session";
+import { useAuth } from "./hooks/useAuth";
 
 const Auth = React.lazy(() => import("remoteAuthApp/Auth"));
 const ManageTask = React.lazy(() => import("remoteTaskManagerApp/ManageTask"));
 
 function ProtectedRoute({ children }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const session = await getUserSession();
-      setIsAuthenticated(!!session);
-    };
-    checkAuth();
-  }, []);
+  const isAuthenticated = useAuth();
 
   if (isAuthenticated === null) {
     return <div>Loading...</div>;
