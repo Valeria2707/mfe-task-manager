@@ -1,0 +1,38 @@
+.navbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 16px 20px;
+  background-color: transparent;
+}
+
+.navbar .btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fff;
+  background-color: #000;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+}
+
+.navbar .btn:hover {
+  background-color: #333;
+  transform: scale(1.05);
+}
+
+.navbar .btn:focus {
+  outline: none;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+main {
+  padding: 20px;
+  background-color: #fafafa;
+  min-height: calc(100vh - 70px);
+}

@@ -1,0 +1,28 @@
+<div class="task-row">
+  <form [formGroup]="form" class="checkbox-form">
+    <input
+      type="checkbox"
+      id="checkbox-{{ task.id }}"
+      formControlName="completed"
+      (change)="onCheckboxChange()"
+      class="checkbox"
+    />
+  </form>
+  <div class="task-details">
+    <div class="task-header">
+      <p
+        class="task-title"
+        [ngClass]="{ 'completed-task': form.get('completed')?.value }"
+      >
+        {{ task.title }}
+      </p>
+    </div>
+    <div class="task-meta">
+      <div class="task-date">{{ task.due_date }}</div>
+    </div>
+  </div>
+  <div class="task-priority" [ngClass]="getPriorityClass(task.priority)">
+    {{ task.priority }}
+  </div>
+  <button class="btn-details" (click)="toggleDetails.emit()">&#9660;</button>
+</div>

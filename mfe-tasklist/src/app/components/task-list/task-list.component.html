@@ -1,0 +1,14 @@
+<div class="scroll-area" style="max-height: 400px; overflow-y: auto">
+  <div *ngFor="let task of tasks" class="accordion">
+    <div class="accordion-item">
+      <app-task-row
+        [task]="task"
+        (toggleDetails)="toggleDetails(task)"
+      ></app-task-row>
+
+      <div *ngIf="isDetailsOpen(task)" class="accordion-content">
+        <app-task-details [task]="task"></app-task-details>
+      </div>
+    </div>
+  </div>
+</div>
